@@ -1,28 +1,35 @@
-#!/usr/bin/env python3
-'''Module - Factors natural numbers'''
-
-from  __future__  import  division
-import sys
-import os
+#!/usr/bin/python3
 
 
-def func_factors(filename):
-    '''Read and find Factorials of every line '''
-    with open(filename, 'r') as f:
-        for line in f:
-            num = int(line)
-            resul = factors(num)
-            print ("{}={}*{}".format(num, int(num / resul), resul))
-    f.closed
+import math
+from sys import argv
 
-def factors(x):
-    '''Returns the minimun factorial number '''
-    for y in range(1, x + 1):
-        if x % y == 0 and y is not 1:
-            return y
+def polynomial(x, n):
+    return (x**2 + 1) % n
+
+def pollards_rho(n):
+    x = 2
+    y = 2
+    d = 1
+    while d == 1:
+        x = int(polynomial(x, n))
+        y = int(polynomial(polynomial(y, n), n))
+        d = math.gcd(int(abs(x - y)), n)
+    if d != n:          # program is not yet completed
+        return d
+
+
+def get_primes():
+    with open(argv[1]) as f:
+        for number in f:
+            num = int(number)
+            if num % 2 == 0:
+                print("{:d}={}*{}".format(num, num // 2, 2))
+            else:
+                prime_factor1 = pollards_rho(num)
+                prime_factor2 = int(num / prime_factor1)
+                print("{}={}*{}".format(num, prime_factor1, prime_factor2))
+
 
 if __name__ == "__main__":
-    '''main'''
-    if (len(sys.argv) is not 2):
-        raise SyntaxError("[BAD-USAGE]: Expected only one argument")
-    func_factors(sys.argv[1])
+    get_primes()
