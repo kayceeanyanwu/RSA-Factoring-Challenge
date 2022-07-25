@@ -1,28 +1,22 @@
-#!/usr/bin/env python3
-'''Module - Factors natural numbers'''
+#!/usr/bin/python3
+import math
+from sys import argv
 
-from  __future__  import  division
-import sys
-import os
+def get_factors_of():
+    with open(argv[1]) as f:
+        for number in f:
+            num = int(number)
+            poss_p = math.floor(math.sqrt(num)) 
 
+            if poss_p % 2 == 0: # Only checks odd numbers, it reduces time by orders of magnitude
+                poss_p += 1
+            while poss_p < num:
+                if num % poss_p == 0:
+                    print("{}".format(poss_p)
+		else:
+		    poss_p += 2
+		    print("{}".format(poss_p)
 
-def func_factors(filename):
-    '''Read and find Factorials of every line '''
-    with open(filename, 'r') as f:
-        for line in f:
-            num = int(line)
-            resul = factors(num)
-            print ("{}={}*{}".format(num, int(num / resul), resul))
-    f.closed
-
-def factors(x):
-    '''Returns the minimun factorial number '''
-    for y in range(1, x + 1):
-        if x % y == 0 and y is not 1:
-            return y
 
 if __name__ == "__main__":
-    '''main'''
-    if (len(sys.argv) is not 2):
-        raise SyntaxError("[BAD-USAGE]: Expected only one argument")
-    func_factors(sys.argv[1])
+    get_factors_of()
