@@ -1,22 +1,25 @@
 #!/usr/bin/python3
-import math
 from sys import argv
+from math import sqrt
 
-def get_factors_of():
+
+def factor():
     with open(argv[1]) as f:
-        for number in f:
-            num = int(number)
-            poss_p = math.floor(math.sqrt(num)) 
+        for line in f:
+            num = int(line)
+            print("{:d}=".format(num), end="")
+            if num % 2 == 0:
+                print("{}*2".format(num//2))
+                continue
+            sqn = int(sqrt(num))
+            if sqn % 2 == 0:
+                sqn += 1
+            for i in range(3, sqn + 1, 2):
+                if num % i == 0:
+                    print("{}*{}".format(i, num//i))
+                    break
+            if num % i != 0:
+                print("{}={}*1".format(num, num))
 
-            if poss_p % 2 == 0: # Only checks odd numbers, it reduces time by orders of magnitude
-                poss_p += 1
-            while poss_p < num:
-                if num % poss_p == 0:
-                    print("{}".format(poss_p)
-		else:
-		    poss_p += 2
-		    print("{}".format(poss_p)
 
-
-if __name__ == "__main__":
-    get_factors_of()
+factor()
